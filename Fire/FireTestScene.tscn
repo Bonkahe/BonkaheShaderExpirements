@@ -98,9 +98,6 @@ instance_shader_parameters/OffsetDirection = Vector3(5.38962, 2.68152, 0.0651767
 mesh = SubResource("SphereMesh_w4okm")
 surface_material_override/0 = SubResource("ShaderMaterial_l8ulg")
 script = ExtResource("2_x6muc")
-lightBaseLine = null
-lightflickerNoisePower = null
-maxDrift = null
 upwardDrift = 40.0
 velocityMultiplier = 50.0
 RandomNoisePower = 0.02
@@ -111,7 +108,7 @@ mesh = SubResource("SphereMesh_mrtcr")
 surface_material_override/0 = SubResource("StandardMaterial3D_qo6be")
 
 [node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0820357, 0.0514415, 0.200493)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.584915, 0.157996, 0.595401)
 
 [node name="BaseMesh" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.00735, 0)
@@ -121,9 +118,9 @@ skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_qo6be")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Node3D"]
-transform = Transform3D(-1.03316e-07, -1, 0, 1, -1.03316e-07, 0, 0, 0, 1, 0.0691244, 2.67938, 0.0509588)
+transform = Transform3D(-1.03316e-07, -1, 0, 1, -1.03316e-07, 0, 0, 0, 1, -0.054987, 2.67989, -0.0612485)
 light_color = Color(0.6, 0.45098, 0.317647, 1)
-light_energy = 2.21899
+light_energy = 1.08784
 light_size = 0.268
 shadow_enabled = true
 omni_range = 10.4749
@@ -131,7 +128,7 @@ omni_range = 10.4749
 [node name="Flame" type="MeshInstance3D" parent="Node3D" node_paths=PackedStringArray("light")]
 transform = Transform3D(-1.03316e-07, -1, 0, 1, -1.03316e-07, 0, 0, 0, 1, 0, 2.08556, 0)
 cast_shadow = 0
-instance_shader_parameters/OffsetDirection = Vector3(-0.0129113, 2.73082, 0.251452)
+instance_shader_parameters/OffsetDirection = Vector3(-0.639902, 2.83788, 0.534152)
 mesh = SubResource("SphereMesh_4gxri")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("ShaderMaterial_xfll8")
