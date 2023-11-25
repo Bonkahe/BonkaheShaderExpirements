@@ -1,0 +1,76 @@
+[gd_scene load_steps=4 format=3 uid="uid://br1wksg2s2hti"]
+
+[ext_resource type="PackedScene" uid="uid://btuac80fv3sa7" path="res://ConstraintBlendShapes/ArmTest.glb" id="1_cjyl7"]
+[ext_resource type="Script" path="res://ConstraintBlendShapes/ArmJointConstraint.gd" id="2_qmprx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ygv7"]
+albedo_color = Color(0.752941, 0.541176, 0.466667, 1)
+roughness = 0.43
+subsurf_scatter_enabled = true
+subsurf_scatter_strength = 0.34
+subsurf_scatter_skin_mode = true
+
+[node name="ArmTest" instance=ExtResource("1_cjyl7")]
+
+[node name="Skeleton3D" parent="ArmRig" index="0"]
+bones/1/scale = Vector3(1, 1, 1)
+bones/2/rotation = Quaternion(-0.191914, 0.640138, -0.509701, 0.541847)
+bones/3/rotation = Quaternion(0.122629, 0.0911566, -0.0796395, 0.985043)
+bones/3/scale = Vector3(1, 1, 1)
+bones/4/rotation = Quaternion(-0.0278298, -0.0139332, 0.0130799, 0.99943)
+bones/4/scale = Vector3(1, 1, 1)
+bones/5/rotation = Quaternion(0.091287, 0.727118, 0.151855, 0.663254)
+bones/6/rotation = Quaternion(0.0112192, -0.0559423, 0.00546783, 0.998356)
+bones/6/scale = Vector3(1, 1, 1)
+bones/7/rotation = Quaternion(0.198108, -0.0579482, -0.0456854, 0.977399)
+bones/7/scale = Vector3(1, 1, 1)
+bones/8/rotation = Quaternion(0.0687193, -0.0749999, -0.0272428, 0.99444)
+bones/8/scale = Vector3(1, 1, 1)
+bones/9/scale = Vector3(1, 1, 1)
+bones/10/rotation = Quaternion(0.152843, -0.0203332, -0.017084, 0.987894)
+bones/10/scale = Vector3(1, 1, 1)
+bones/11/rotation = Quaternion(-0.0325692, 0.0265056, -0.005406, 0.999103)
+bones/12/rotation = Quaternion(0.0384435, 0.713081, 0.108318, 0.691596)
+bones/12/scale = Vector3(1, 1, 1)
+bones/13/rotation = Quaternion(0.0569108, -0.0668767, 1.44854e-05, 0.996137)
+bones/14/rotation = Quaternion(0.134911, -0.0792447, -0.0393215, 0.986901)
+bones/14/scale = Vector3(1, 1, 1)
+bones/15/rotation = Quaternion(0.0573884, -0.0439871, 0.00835132, 0.997347)
+bones/16/rotation = Quaternion(0.0160379, 0.682969, 0.0441432, 0.728935)
+bones/16/scale = Vector3(1, 1, 1)
+bones/17/rotation = Quaternion(0.0256837, -0.0808903, -0.0158991, 0.996265)
+bones/18/rotation = Quaternion(0.194725, -0.0476556, -0.0261281, 0.979351)
+bones/20/rotation = Quaternion(-0.0166144, 0.673477, -0.00710968, 0.738987)
+bones/20/scale = Vector3(1, 1, 1)
+bones/21/rotation = Quaternion(0.0575832, -0.075629, -0.150926, 0.983964)
+bones/22/rotation = Quaternion(0.0646927, -0.00890793, -0.0179632, 0.997704)
+bones/22/scale = Vector3(1, 1, 1)
+bones/23/rotation = Quaternion(0.0684654, -0.0157989, 0.0240622, 0.997238)
+
+[node name="ArmMesh" parent="ArmRig/Skeleton3D" index="0"]
+blend_shapes/ArmClosed = 0.908579
+surface_material_override/0 = SubResource("StandardMaterial3D_0ygv7")
+
+[node name="SkeletonIK3D" type="SkeletonIK3D" parent="ArmRig/Skeleton3D" index="1"]
+process_priority = 1
+root_bone = &"upper_arm.L"
+tip_bone = &"hand.L"
+use_magnet = true
+magnet = Vector3(2.935, 0.12, -2)
+target_node = NodePath("../../../HandTarget")
+
+[node name="ElbowConstraint" type="Node" parent="." index="1" node_paths=PackedStringArray("meshInstance", "skeletonref")]
+script = ExtResource("2_qmprx")
+meshInstance = NodePath("../ArmRig/Skeleton3D/ArmMesh")
+blendShapeName = "ArmClosed"
+jointBeginningName = "upper_arm.L"
+jointEndingName = "forearm.L"
+skeletonref = NodePath("../ArmRig/Skeleton3D")
+boneValid = true
+angleOffset = 70.0
+angleSpread = 45.0
+currentAngle = 88.386
+currentLerp = 0.908579
+
+[node name="HandTarget" type="Node3D" parent="." index="2"]
+transform = Transform3D(-0.899774, 0.0152938, -0.436088, -0.303265, -0.74049, 0.599754, -0.313746, 0.671894, 0.670912, 0.352997, 1.19257, 0.0446868)
