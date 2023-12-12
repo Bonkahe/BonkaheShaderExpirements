@@ -1,0 +1,161 @@
+[gd_scene load_steps=13 format=3 uid="uid://cw4drult6ifeg"]
+
+[ext_resource type="Shader" path="res://Water/WaterShader.gdshader" id="1_wga0q"]
+[ext_resource type="Shader" path="res://Water/WaterCaustics.gdshader" id="2_8v6qo"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_i7ggj"]
+size = Vector2(2048, 2048)
+subdivide_width = 200
+subdivide_depth = 200
+
+[sub_resource type="Gradient" id="Gradient_hkw5c"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.201439, 0.719424, 1)
+colors = PackedColorArray(0.0380524, 0.182746, 0.349328, 1, 0.0784314, 0.282353, 0.517647, 1, 0.173936, 0.405947, 0.674949, 1, 0.278431, 0.541176, 0.847059, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0gg6e"]
+gradient = SubResource("Gradient_hkw5c")
+
+[sub_resource type="Gradient" id="Gradient_6tf6k"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.940845, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.802094, 0.802094, 0.802094, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_yr8ur"]
+noise_type = 2
+frequency = 0.0323
+fractal_octaves = 4
+fractal_lacunarity = 4.0
+fractal_gain = 0.13
+cellular_distance_function = 1
+domain_warp_enabled = true
+domain_warp_amplitude = 2.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_thfjn"]
+width = 1024
+height = 1024
+seamless = true
+seamless_blend_skirt = 0.2
+color_ramp = SubResource("Gradient_6tf6k")
+noise = SubResource("FastNoiseLite_yr8ur")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_y64v8"]
+width = 1024
+height = 1024
+seamless = true
+seamless_blend_skirt = 0.2
+as_normal_map = true
+bump_strength = 13.7
+noise = SubResource("FastNoiseLite_yr8ur")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iqp51"]
+render_priority = 0
+shader = ExtResource("1_wga0q")
+shader_parameter/worldHeight = 0.0
+shader_parameter/waveBlendSoftness = 0.1
+shader_parameter/waveBlendPower = 0.5
+shader_parameter/waveHeight = 50.0
+shader_parameter/waveTime = 30.0
+shader_parameter/specular = 0.5
+shader_parameter/roughness = 0.0
+shader_parameter/UVScale = 2000.0
+shader_parameter/subdiv_res = 2048.0
+shader_parameter/NormalMapSampleRange = 10.0
+shader_parameter/FresnelPower = 1.0
+shader_parameter/proximity_fade_distance = 100.0
+shader_parameter/waveNoise = SubResource("NoiseTexture2D_thfjn")
+shader_parameter/waveNoiseNormalMap = SubResource("NoiseTexture2D_y64v8")
+shader_parameter/TopColorRange = SubResource("GradientTexture1D_0gg6e")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w3ipv"]
+render_priority = 0
+shader = ExtResource("2_8v6qo")
+shader_parameter/worldHeight = 0.0
+shader_parameter/waveBlendSoftness = 0.1
+shader_parameter/waveBlendPower = 0.5
+shader_parameter/waveHeight = 50.0
+shader_parameter/waveTime = 30.0
+shader_parameter/specular = 0.5
+shader_parameter/roughness = 0.0
+shader_parameter/UVScale = 2000.0
+shader_parameter/subdiv_res = 1024.0
+shader_parameter/NormalMapSampleRange = 10.0
+shader_parameter/AlbedoColor = Color(0.678431, 0.67451, 0.619608, 1)
+shader_parameter/DepthsColor = Color(0.156863, 0.290196, 0.384314, 1)
+shader_parameter/LightPower = 0.67
+shader_parameter/LightStrength = 14.55
+shader_parameter/ShadowOpacity = 1.0
+shader_parameter/ShadowStrength = 1.0
+shader_parameter/fadeOffUpper = 37.715
+shader_parameter/fadeOffBottomBeginning = 10.0
+shader_parameter/fadeOffBottomEnd = 200.0
+shader_parameter/waveNoise = SubResource("NoiseTexture2D_thfjn")
+shader_parameter/TopColorRange = SubResource("GradientTexture1D_0gg6e")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_74r8s"]
+render_priority = 0
+shader = ExtResource("2_8v6qo")
+shader_parameter/worldHeight = 0.0
+shader_parameter/waveBlendSoftness = 0.1
+shader_parameter/waveBlendPower = 0.5
+shader_parameter/waveHeight = 50.0
+shader_parameter/waveTime = 30.0
+shader_parameter/specular = 0.5
+shader_parameter/roughness = 0.0
+shader_parameter/UVScale = 2000.0
+shader_parameter/subdiv_res = 1024.0
+shader_parameter/NormalMapSampleRange = 10.0
+shader_parameter/AlbedoColor = Color(0.678431, 0.67451, 0.619608, 1)
+shader_parameter/DepthsColor = Color(0.156863, 0.290196, 0.384314, 1)
+shader_parameter/LightPower = 0.67
+shader_parameter/LightStrength = 14.55
+shader_parameter/ShadowOpacity = 1.0
+shader_parameter/ShadowStrength = 1.0
+shader_parameter/fadeOffUpper = 37.715
+shader_parameter/fadeOffBottomBeginning = 10.0
+shader_parameter/fadeOffBottomEnd = 200.0
+shader_parameter/waveNoise = SubResource("NoiseTexture2D_thfjn")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.7455, -0.140038, 0.651628, 0.640317, 0.120886, 0.758539, -0.184997, 0.982739, -0.000451794, -35.9073, 47.6476, 75.1838)
+light_angular_distance = 4.85
+shadow_enabled = true
+directional_shadow_split_1 = 1.0
+directional_shadow_max_distance = 1000.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.08032, -0.809983, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_i7ggj")
+surface_material_override/0 = SubResource("ShaderMaterial_iqp51")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+transform = Transform3D(0.282402, 0, 0, 0, 0.129193, 0, 0, 0, 0.342308, 60.411, -51.2024, -23.1569)
+radius = 536.244
+material = SubResource("ShaderMaterial_w3ipv")
+
+[node name="CSGSphere3D3" type="CSGSphere3D" parent="."]
+transform = Transform3D(0.282402, 0, 0, 0, 0.129193, 0, 0, 0, 0.342308, -58.3147, -111.462, 95.1978)
+radius = 536.244
+material = SubResource("ShaderMaterial_w3ipv")
+
+[node name="CSGSphere3D4" type="CSGSphere3D" parent="."]
+transform = Transform3D(0.282402, 0, 0, 0, 0.129193, 0, 0, 0, 0.342308, -61.1289, -111.462, -154.445)
+radius = 536.244
+material = SubResource("ShaderMaterial_w3ipv")
+
+[node name="CSGSphere3D5" type="CSGSphere3D" parent="."]
+transform = Transform3D(0.156959, 0, 0, 0, 0.0718055, 0, 0, 0, 0.190254, -88.9511, 115.346, 103.97)
+radius = 536.244
+
+[node name="CSGSphere3D6" type="CSGSphere3D" parent="."]
+transform = Transform3D(0.247311, -0.0118348, -0.162256, 0, 0.126846, -0.0649517, 0.136337, 0.0214679, 0.294327, 53.8111, -144.004, 224.97)
+radius = 536.244
+material = SubResource("ShaderMaterial_w3ipv")
+
+[node name="CSGSphere3D2" type="CSGSphere3D" parent="."]
+transform = Transform3D(0.379114, 0, 0, 0, 0.379114, 0, 0, 0, 0.379114, -215.513, -383.022, -46.2406)
+radius = 536.244
+material = SubResource("ShaderMaterial_74r8s")

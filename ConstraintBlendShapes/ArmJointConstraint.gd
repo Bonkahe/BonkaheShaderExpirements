@@ -38,12 +38,12 @@ func _process(delta):
 		var beginningBonePose = skeletonref.get_bone_global_pose(boneBeginningID);
 		var endingBonePose = skeletonref.get_bone_global_pose(boneEndID);
 		
-		var desiredtorsoPosition = Vector3(0.0, 1.0, 0.0); #< - WORLD SPACE
-		var resultingPosition = skeletonref.to_local(desiredtorsoPosition);
-		
-		beginningBonePose.origin = resultingPosition;
-		
-		skeletonref.set_bone_global_pose_override(boneBeginningID, beginningBonePose, 1.0)
+		#var desiredtorsoPosition = Vector3(0.0, 1.0, 0.0); #< - WORLD SPACE
+		#var resultingPosition = skeletonref.to_local(desiredtorsoPosition);
+		#
+		#beginningBonePose.origin = resultingPosition;
+		#
+		#skeletonref.set_bone_global_pose_override(boneBeginningID, beginningBonePose, 1.0)
 		
 		
 		

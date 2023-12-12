@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://br1wksg2s2hti"]
+[gd_scene load_steps=5 format=3 uid="uid://br1wksg2s2hti"]
 
 [ext_resource type="PackedScene" uid="uid://btuac80fv3sa7" path="res://ConstraintBlendShapes/ArmTest.glb" id="1_cjyl7"]
 [ext_resource type="Script" path="res://ConstraintBlendShapes/ArmJointConstraint.gd" id="2_qmprx"]
+[ext_resource type="Script" path="res://HeadStabalizer.gd" id="3_4d1ew"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ygv7"]
 albedo_color = Color(0.752941, 0.541176, 0.466667, 1)
@@ -48,7 +49,6 @@ bones/22/scale = Vector3(1, 1, 1)
 bones/23/rotation = Quaternion(0.0684654, -0.0157989, 0.0240622, 0.997238)
 
 [node name="ArmMesh" parent="ArmRig/Skeleton3D" index="0"]
-blend_shapes/ArmClosed = 0.908579
 surface_material_override/0 = SubResource("StandardMaterial3D_0ygv7")
 
 [node name="SkeletonIK3D" type="SkeletonIK3D" parent="ArmRig/Skeleton3D" index="1"]
@@ -69,8 +69,16 @@ skeletonref = NodePath("../ArmRig/Skeleton3D")
 boneValid = true
 angleOffset = 70.0
 angleSpread = 45.0
-currentAngle = 88.386
-currentLerp = 0.908579
+currentAngle = 16.8159
 
 [node name="HandTarget" type="Node3D" parent="." index="2"]
-transform = Transform3D(-0.899774, 0.0152938, -0.436088, -0.303265, -0.74049, 0.599754, -0.313746, 0.671894, 0.670912, 0.352997, 1.19257, 0.0446868)
+transform = Transform3D(-0.899774, 0.0152938, -0.436088, -0.303265, -0.74049, 0.599754, -0.313746, 0.671894, 0.670912, 0.326988, 1.32344, 0.257261)
+
+[node name="Node3D" type="Node3D" parent="." index="3"]
+transform = Transform3D(0.513017, 0, 0.858378, 0, 1, 0, -0.858378, 0, 0.513017, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="." index="4" node_paths=PackedStringArray("bodyRef")]
+transform = Transform3D(0.513017, 0, 0.858378, 0, 1, 0, -0.858378, 0, 0.513017, 0, 0, 0)
+script = ExtResource("3_4d1ew")
+bodyRef = NodePath("../Node3D")
+movementSpeed = null
