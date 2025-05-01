@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cegg6el237jda"]
+
+[ext_resource type="Shader" path="res://Foliage/FoliageDebug.gdshader" id="1_gmvp6"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_gmvp6")
+shader_parameter/DebugMode = 0

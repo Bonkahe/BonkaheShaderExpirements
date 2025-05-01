@@ -1,0 +1,130 @@
+[gd_scene load_steps=13 format=3 uid="uid://dtvko3mm2ow5r"]
+
+[ext_resource type="CompositorEffect" uid="uid://ck8ll5tq66bkd" path="res://CompositorEffects/SunshineCloudsResourceDay.tres" id="1_0ff65"]
+[ext_resource type="Script" uid="uid://dfj074g0bsaan" path="res://CompositorEffects/SunshineCloudsDriver.cs" id="2_0ff65"]
+[ext_resource type="Script" uid="uid://dft8dopp845nb" path="res://camera.gd" id="2_iiaqv"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_20awl"]
+
+[sub_resource type="Sky" id="Sky_y65jo"]
+sky_material = SubResource("ProceduralSkyMaterial_20awl")
+
+[sub_resource type="Environment" id="Environment_x3ayj"]
+background_mode = 2
+sky = SubResource("Sky_y65jo")
+tonemap_mode = 2
+ssil_radius = 10000.0
+ssil_intensity = 9.28
+ssil_sharpness = 1.0
+glow_enabled = true
+fog_mode = 1
+fog_density = 1.0
+
+[sub_resource type="Compositor" id="Compositor_0ff65"]
+compositor_effects = Array[CompositorEffect]([ExtResource("1_0ff65")])
+
+[sub_resource type="Gradient" id="Gradient_0ff65"]
+offsets = PackedFloat32Array(0.0127389, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_iiaqv"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_566xq"]
+color_ramp = SubResource("Gradient_0ff65")
+noise = SubResource("FastNoiseLite_iiaqv")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fnpmq"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_color = Color(0.67621, 0.558233, 0.425126, 1)
+albedo_texture = SubResource("NoiseTexture2D_566xq")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_41wtw"]
+albedo_color = Color(0.336454, 0.393507, 0.275599, 1)
+
+[node name="CompositorTestScene" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.806192, -0.104313, 0.582385, 0.157336, 0.911094, 0.380989, -0.57035, 0.39878, -0.718105, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 20000.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_x3ayj")
+compositor = SubResource("Compositor_0ff65")
+
+[node name="CSGSphere3D2" type="CSGSphere3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 35.4701, -0.168448, 0, 0.6257, 9.54912, 13.0769, 0, 7.19241)
+material_override = SubResource("StandardMaterial3D_fnpmq")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15.6772, 0)
+size = Vector3(400000, 1, 400000)
+material = SubResource("StandardMaterial3D_41wtw")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.28061, 4.14495, 20.8118)
+far = 800000.0
+script = ExtResource("2_iiaqv")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2000, 5000, 2000)
+radius = 250.0
+height = 10000.0
+sides = 32
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2000, 5000, 4000)
+radius = 250.0
+height = 10000.0
+sides = 32
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2000, 5000, 6000)
+radius = 250.0
+height = 10000.0
+sides = 32
+
+[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2000, 5000, 8000)
+radius = 250.0
+height = 10000.0
+sides = 32
+
+[node name="CSGCylinder3D5" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2000, 5000, 10346)
+radius = 250.0
+height = 10000.0
+sides = 32
+
+[node name="CSGCylinder3D6" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2000, 5000, 12346)
+radius = 250.0
+height = 10000.0
+sides = 32
+
+[node name="CSGCylinder3D7" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2000, 5000, 14346)
+radius = 250.0
+height = 10000.0
+sides = 32
+
+[node name="CSGCylinder3D8" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2000, 5000, 16346)
+radius = 250.0
+height = 10000.0
+sides = 32
+
+[node name="SunshineCloudsDriver" type="Node" parent="."]
+script = ExtResource("2_0ff65")
+UpdateContiniously = true
+WindDirection = Vector3(0, -0.1, 1)
+LargeStructuresWindSpeed = 200.0
+BaseWindSpeed = 50.0
+DetailCloudsSpeed = 10.0
+CloudsResource = ExtResource("1_0ff65")
+LargeCloudsPos = Vector3(24313.9, -15851.4, -1951.12)
+MediumCloudsPos = Vector3(365.74, -2076.39, -446.177)
+SmallCloudsPos = Vector3(694.044, 889.302, -175.039)
+metadata/_custom_type_script = "uid://dfj074g0bsaan"

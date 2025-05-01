@@ -1,0 +1,82 @@
+[gd_scene load_steps=10 format=3 uid="uid://cqu5imdpmi5vg"]
+
+[ext_resource type="Script" path="res://camera.gd" id="1_fuosg"]
+[ext_resource type="Shader" path="res://Portals/PortalShader.gdshader" id="2_hscsm"]
+[ext_resource type="Script" path="res://Portals/PortalHandler.gd" id="3_nw1r3"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_khke8"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_oj7cc"]
+sky_material = SubResource("ProceduralSkyMaterial_khke8")
+
+[sub_resource type="Environment" id="Environment_vaw3e"]
+background_mode = 2
+sky = SubResource("Sky_oj7cc")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_v440s"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_mausy"]
+viewport_path = NodePath("SubViewportB")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_43v0l"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_hscsm")
+shader_parameter/portal_viewport_texture = SubResource("ViewportTexture_mausy")
+
+[node name="PortalTest" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vaw3e")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.23029)
+size = Vector3(24.1123, 1, 27.2318)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.91149, -1.23029)
+size = Vector3(8.31738, 10.6071, 4.34009)
+
+[node name="FreeLookCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.19425, 5.07363, 13.0242)
+script = ExtResource("1_fuosg")
+
+[node name="DoorA" type="MeshInstance3D" parent="."]
+transform = Transform3D(4.45152, 0, 0, 0, 4.45152, 0, 0, 0, 4.45152, -0.363357, 2.66485, 1.491)
+mesh = SubResource("QuadMesh_v440s")
+surface_material_override/0 = SubResource("ShaderMaterial_43v0l")
+
+[node name="DoorB" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.45152, 0, 3.89164e-07, 0, 4.45152, 0, -3.89164e-07, 0, -4.45152, -0.363357, 2.84285, -3.78408)
+mesh = SubResource("QuadMesh_v440s")
+surface_material_override/0 = SubResource("ShaderMaterial_43v0l")
+
+[node name="SubViewportA" type="SubViewport" parent="."]
+
+[node name="DoorACamera" type="Camera3D" parent="SubViewportA"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.19487, 9.54176)
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="SubViewportA/DoorACamera"]
+
+[node name="SubViewportB" type="SubViewport" parent="."]
+
+[node name="DoorBCamera" type="Camera3D" parent="SubViewportB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.19487, 9.54176)
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="SubViewportB/DoorBCamera"]
+
+[node name="PortalCode" type="Node" parent="." node_paths=PackedStringArray("RootCamera", "DoorAMesh", "DoorBMesh", "DoorACamera", "DoorBCamera")]
+script = ExtResource("3_nw1r3")
+RootCamera = NodePath("../FreeLookCamera")
+DoorAMesh = NodePath("../DoorA")
+DoorBMesh = NodePath("../DoorB")
+DoorACamera = NodePath("../SubViewportA/DoorACamera")
+DoorBCamera = NodePath("../SubViewportB/DoorBCamera")

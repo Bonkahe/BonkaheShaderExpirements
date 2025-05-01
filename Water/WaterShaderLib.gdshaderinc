@@ -18,44 +18,44 @@ float GetHeight(vec2 positionA, vec2 positionB){
 }
 
 vec4 GenerateNormal(vec2 positionA, vec2 positionB){
-	
-	vec3 center = vec3(positionA.x, 
-		GetHeight(positionA, positionB), 
+
+	vec3 center = vec3(positionA.x,
+		GetHeight(positionA, positionB),
 		positionA.y);
-	
-	vec3 left = vec3((positionA.x - NormalMapSampleRange), 
+
+	vec3 left = vec3((positionA.x - NormalMapSampleRange),
 		GetHeight(vec2(positionA.x - NormalMapSampleRange, positionA.y), vec2(positionB.x - NormalMapSampleRange, positionB.y)),
 		positionA.y);
-	
-	vec3 right = vec3((positionA.x + NormalMapSampleRange), 
+
+	vec3 right = vec3((positionA.x + NormalMapSampleRange),
 		GetHeight(vec2(positionA.x + NormalMapSampleRange, positionA.y), vec2(positionB.x + NormalMapSampleRange, positionB.y)),
 		positionA.y);
-	
-	vec3 up = vec3(positionA.x, 
+
+	vec3 up = vec3(positionA.x,
 		GetHeight(vec2(positionA.x, positionA.y - NormalMapSampleRange), vec2(positionB.x, positionB.y - NormalMapSampleRange)),
 		(positionA.y - NormalMapSampleRange));
-	
-	vec3 down = vec3(positionA.x, 
+
+	vec3 down = vec3(positionA.x,
 		GetHeight(vec2(positionA.x, positionA.y + NormalMapSampleRange), vec2(positionB.x, positionB.y + NormalMapSampleRange)),
 		(positionA.y + NormalMapSampleRange));
 	//return normalize(vec3(2.0*(right.y-left.y), 2.0*(down.y-up.y), -4.0));
-	vec3 upleft = vec3((positionA.x - NormalMapSampleRange), 
+	vec3 upleft = vec3((positionA.x - NormalMapSampleRange),
 		GetHeight(vec2(positionA.x - NormalMapSampleRange, positionA.y - NormalMapSampleRange), vec2(positionB.x - NormalMapSampleRange, positionB.y - NormalMapSampleRange)),
 		(positionA.y - NormalMapSampleRange));
-	
-	vec3 upright = vec3((positionA.x + NormalMapSampleRange), 
+
+	vec3 upright = vec3((positionA.x + NormalMapSampleRange),
 		GetHeight(vec2(positionA.x + NormalMapSampleRange, positionA.y - NormalMapSampleRange), vec2(positionB.x + NormalMapSampleRange, positionB.y - NormalMapSampleRange)),
 		(positionA.y - NormalMapSampleRange));
-	
-	vec3 downleft = vec3((positionA.x - NormalMapSampleRange), 
+
+	vec3 downleft = vec3((positionA.x - NormalMapSampleRange),
 		GetHeight(vec2(positionA.x - NormalMapSampleRange, positionA.y + NormalMapSampleRange), vec2(positionB.x - NormalMapSampleRange, positionB.y + NormalMapSampleRange)),
 		(positionA.y + NormalMapSampleRange));
-	
-	vec3 downright = vec3((positionA.x + NormalMapSampleRange), 
+
+	vec3 downright = vec3((positionA.x + NormalMapSampleRange),
 		GetHeight(vec2(positionA.x + NormalMapSampleRange, positionA.y + NormalMapSampleRange), vec2(positionB.x + NormalMapSampleRange, positionB.y + NormalMapSampleRange)),
 		(positionA.y + NormalMapSampleRange));
-	
-	
+
+
 	vec3 leftVec = normalize(left - center);
 	vec3 rightVec = normalize(right - center);
 	vec3 upVec = normalize(up - center);
@@ -64,18 +64,18 @@ vec4 GenerateNormal(vec2 positionA, vec2 positionB){
 	vec3 uprightVec = normalize(upright - center);
 	vec3 downleftVec = normalize(downleft - center);
 	vec3 downrightVec = normalize(downright - center);
-	
-	
+
+
 	vec3 finalVector = cross(rightVec,upVec);
 	finalVector += cross(upVec, leftVec);
 	finalVector += cross(leftVec, downVec);
 	finalVector += cross(downVec, rightVec);
-	
+
 	finalVector += cross(uprightVec, upleftVec);
 	finalVector += cross(upleftVec, downleftVec);
 	finalVector += cross(downleftVec, downrightVec);
 	finalVector += cross(downrightVec, uprightVec);
-	
+
 	finalVector = normalize(finalVector);
 	finalVector = vec3((finalVector.x + 1.0) * 0.5, (finalVector.y + 1.0) * 0.5, (finalVector.z + 1.0) * 0.5);
 	return vec4(finalVector, center.y);
@@ -88,21 +88,21 @@ vec3 UnpackNormalMap(vec3 rgb)
 }
 
 vec3 HeightBasedVec3Mix(vec3 colorA, vec3 colorB, float heightA, float heightB, float lerpvalue, float blendSoftness){
-	
+
 	heightA += 1.0 - lerpvalue;
 	heightB += lerpvalue;
-	
+
 	float blendValue = max(heightA, heightB) - blendSoftness;
-	
+
 	heightA -= blendValue;
 	heightB -= blendValue;
-	
+
 	heightA = max(heightA, 0.0);
 	heightB = max(heightB, 0.0);
-	
+
 	colorA *= heightA;
 	colorB *= heightB;
-	
+
 	return (colorA + colorB) / (heightA + heightB);
 }
 

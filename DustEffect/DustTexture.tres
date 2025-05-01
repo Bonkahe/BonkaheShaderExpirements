@@ -1,0 +1,52 @@
+[gd_resource type="Shader" format=3 uid="uid://mpqkdvw7vohk"]
+
+[resource]
+code = "shader_type spatial;
+render_mode unshaded, fog_disabled;
+
+uniform sampler3D DustTexture : source_color;
+uniform sampler2D depth_texture : hint_depth_texture, repeat_disable;
+uniform sampler2D heightEffect : repeat_disable;
+
+uniform float TextureScale = 001.0;
+uniform float SandBegin = 2.0;
+uniform float SandEnd = 15.0;
+uniform float Sand2DBlend = 15.0;
+instance uniform float Density :hint_range(0.0, 3.0) = 1.0;
+instance uniform vec3 PanningDirection;
+instance uniform float Speed = 1.0;
+//uniform float Size : hint_range(0.0, 100.0) = 8.0;
+//uniform float Directions : hint_range(1.0, 32.0, 1.0) = 16.0; // BLUR DIRECTIONS (Default 16.0 - More is better but slower)
+//uniform float Quality : hint_range(2.0, 8.0, 2.0) = 4.0; // BLUR QUALITY (Default 4.0 - More is better but slower)
+
+
+void vertex() {
+  POSITION = vec4(VERTEX.xy, 1.0, 1.0);
+}
+
+float GetDepth(vec2 pos, mat4 projectionMatrix){
+	float depth = textureLod(depth_texture, pos, 0.0).r;
+	vec4 view = projectionMatrix * vec4(pos*2.0-1.0,depth,1.0);
+	view.xyz /= view.w;
+	return length(view);
+	//return depth;
+}
+
+void fragment() {
+	float depth = GetDepth(SCREEN_UV, INV_PROJECTION_MATRIX);
+
+	vec3 ro_world = INV_VIEW_MATRIX[3].xyz;
+	vec4 clipPos = vec4((FRAGCOORD.xy / VIEWPORT_SIZE.xy) * 2.0 - 1.0, FRAGCOORD.z, 1.0);
+	vec4 viewPos = INV_PROJECTION_MATRIX * clipPos;
+	vec3 rd_world = normalize(viewPos.xyz / viewPos.w);
+	rd_world = mat3(INV_VIEW_MATRIX) * rd_world;
+
+	vec3 view_dir = normalize(rd_world);
+
+	vec4 dust = texture(DustTexture, ((ro_world + (rd_world * min(depth * 0.8, Sand2DBlend))) * TextureScale) + PanningDirection * TIME * Speed);
+	float sampled = texture(heightEffect, vec2((dot(view_dir, vec3(0.0, 1.0, 0.0)) + 1.0) / 2.0, 0.5)).r;
+	//vec3 color = blur(SCREEN_UV, VIEWPORT_SIZE).rgb;
+	//ALBEDO = vec3(sampled);
+	ALBEDO = dust.rgb;
+	ALPHA = sampled * clamp(smoothstep(SandBegin, SandEnd, depth) * Density, 0.0, 1.0);
+}"

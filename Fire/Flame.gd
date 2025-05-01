@@ -30,6 +30,5 @@ func _process(delta):
 		light.global_position = lastPosition;
 		var newSamplePos : Vector3 = (light.global_position * lightflickerPositionScale) + (Vector3.UP * timecurrent);
 		light.light_energy = lightBaseLine + maxf( (lightflickerNoise.get_noise_3d(newSamplePos.x, newSamplePos.y, newSamplePos.z) * lightflickerNoisePower) + 1.0, 0.0);
-		print(light.light_energy);
 	
 	set_instance_shader_parameter("OffsetDirection", lastPosition);

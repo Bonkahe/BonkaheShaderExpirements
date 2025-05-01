@@ -3,13 +3,12 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://btuac80fv3sa7"
-path="res://.godot/imported/ArmTest.glb-cbd94ff092ac4af8219ddfd26245c589.scn"
+uid="uid://dhwjrxamryb7h"
+valid=false
 
 [deps]
 
-source_file="res://ConstraintBlendShapes/ArmTest.glb"
-dest_files=["res://.godot/imported/ArmTest.glb-cbd94ff092ac4af8219ddfd26245c589.scn"]
+source_file="res://Foliage/TestTree.fbx"
 
 [params]
 
@@ -33,5 +32,6 @@ animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={}
-gltf/naming_version=1
-gltf/embedded_image_handling=1
+fbx/importer=1
+fbx/allow_geometry_helper_nodes=false
+fbx/embedded_image_handling=1

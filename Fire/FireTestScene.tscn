@@ -1,8 +1,15 @@
-[gd_scene load_steps=18 format=3 uid="uid://duxdlu4fk4dnh"]
+[gd_scene load_steps=51 format=3 uid="uid://duxdlu4fk4dnh"]
 
 [ext_resource type="Shader" path="res://Fire/FireShader.gdshader" id="1_y52oe"]
 [ext_resource type="Script" path="res://Fire/Flame.gd" id="2_x6muc"]
 [ext_resource type="FastNoiseLite" uid="uid://ck2cchyjsq6go" path="res://Fire/FlameNoiseBase.tres" id="3_l5s7m"]
+[ext_resource type="Shader" uid="uid://mpqkdvw7vohk" path="res://DustEffect/DustTexture.tres" id="4_bggpt"]
+[ext_resource type="PackedScene" uid="uid://dhwjrxamryb7h" path="res://Foliage/TestTree.fbx" id="5_npi3b"]
+[ext_resource type="Material" uid="uid://cegg6el237jda" path="res://Foliage/FoliageTestMaterial.tres" id="6_bqujc"]
+[ext_resource type="Shader" path="res://WaterDistortion/WaterDistortionTest2.gdshader" id="7_heche"]
+[ext_resource type="Shader" path="res://ProcedualMountains/ProcedualShaderTest.gdshader" id="7_trorg"]
+[ext_resource type="Shader" uid="uid://by241j6hagvuc" path="res://Stylization/EdgeColorHighlight.tres" id="9_trbrl"]
+[ext_resource type="Shader" uid="uid://bj4jsg4cnoibl" path="res://Stylization/RayMarchedShadow.tres" id="9_vjlki"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_w4okm"]
 
@@ -38,15 +45,19 @@ shader_parameter/FlamePatternScale = 10.0
 shader_parameter/FlameDirectionBias = null
 shader_parameter/maxColorDistance = 3.37
 shader_parameter/EmissionPower = 2.13
+shader_parameter/ColorGradient = SubResource("GradientTexture1D_golmy")
+shader_parameter/NoisePattern = SubResource("NoiseTexture3D_mpbdt")
 shader_parameter/NoisePower = 2.0
 shader_parameter/PointSharpness = 2.0
 shader_parameter/OffsetPower = 40.0
 shader_parameter/NormalPower = 0.09
 shader_parameter/InnerRadius = 0.61
-shader_parameter/ColorGradient = SubResource("GradientTexture1D_golmy")
-shader_parameter/NoisePattern = SubResource("NoiseTexture3D_mpbdt")
 
 [sub_resource type="SphereMesh" id="SphereMesh_mrtcr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1hlq"]
+emission = Color(0.603922, 0.247059, 0.529412, 1)
+emission_energy_multiplier = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qo6be"]
 albedo_color = Color(0.301961, 0.247059, 0.223529, 1)
@@ -79,17 +90,172 @@ shader_parameter/FlamePatternScale = 2.0
 shader_parameter/FlameDirectionBias = 0.5
 shader_parameter/maxColorDistance = 3.37
 shader_parameter/EmissionPower = 2.13
+shader_parameter/ColorGradient = SubResource("GradientTexture1D_72aiy")
+shader_parameter/NoisePattern = SubResource("NoiseTexture3D_368oj")
 shader_parameter/NoisePower = 40.0
 shader_parameter/PointSharpness = 2.35
 shader_parameter/OffsetPower = 13.215
 shader_parameter/NormalPower = 0.0
 shader_parameter/InnerRadius = 0.6
-shader_parameter/ColorGradient = SubResource("GradientTexture1D_72aiy")
-shader_parameter/NoisePattern = SubResource("NoiseTexture3D_368oj")
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_4rhuu"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1s4lw"]
+albedo_color = Color(0.317683, 0.638119, 0.320702, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_obvji"]
+subdivide_width = 1000
+subdivide_depth = 1000
+
+[sub_resource type="Gradient" id="Gradient_te8ax"]
+interpolation_mode = 2
+interpolation_color_space = 2
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_4ofsj"]
+gradient = SubResource("Gradient_te8ax")
+use_hdr = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_k3x32"]
+frequency = 0.0077
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_160yk"]
+width = 256
+height = 256
+seamless = true
+noise = SubResource("FastNoiseLite_k3x32")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_j3ojw"]
+frequency = 0.0267
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_w7vcu"]
+seamless = true
+noise = SubResource("FastNoiseLite_j3ojw")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7s6md"]
+frequency = 0.1505
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vtl2q"]
+seamless = true
+noise = SubResource("FastNoiseLite_7s6md")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jfke4"]
+render_priority = 0
+shader = ExtResource("7_trorg")
+shader_parameter/ProcedualNoiseA = SubResource("NoiseTexture2D_160yk")
+shader_parameter/ProcedualNoiseB = SubResource("NoiseTexture2D_w7vcu")
+shader_parameter/ProcedualNoiseC = SubResource("NoiseTexture2D_vtl2q")
+shader_parameter/Gradient = SubResource("GradientTexture1D_4ofsj")
+shader_parameter/NoiseOffsetPower = 0.15
+shader_parameter/AngleStepDistance = 0.094
+shader_parameter/SlopeEffect = 0.289
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5isye"]
+subdivide_width = 100
+subdivide_depth = 100
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hq7tx"]
+noise_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_45gty"]
+width = 1024
+height = 1024
+seamless = true
+noise = SubResource("FastNoiseLite_hq7tx")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pqn44"]
+width = 1024
+height = 1024
+seamless = true
+as_normal_map = true
+bump_strength = 16.2
+noise = SubResource("FastNoiseLite_hq7tx")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_afrat"]
+render_priority = -1
+shader = ExtResource("7_heche")
+shader_parameter/worldHeight = 0.0
+shader_parameter/waveNoise = SubResource("NoiseTexture2D_45gty")
+shader_parameter/waveNoiseNormalMap = SubResource("NoiseTexture2D_pqn44")
+shader_parameter/waveBlendSoftness = 0.1
+shader_parameter/waveBlendPower = 0.5
+shader_parameter/waveHeight = 0.5
+shader_parameter/waveTime = 1.0
+shader_parameter/specular = 0.5
+shader_parameter/roughness = 0.25
+shader_parameter/UVScale = 100.0
+shader_parameter/subdiv_res = 1024.0
+shader_parameter/NormalMapSampleRange = 0.1
+shader_parameter/ColorBase = Color(0.252326, 0.417851, 0.584477, 1)
+shader_parameter/ReflectionAngleBlend = 0.611
+shader_parameter/ReflectionBottomEdgeFade = 0.5
+shader_parameter/MaxDifferenceMultiplier = 100.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_l3qqo"]
+flip_faces = true
+size = Vector2(2, 2)
+subdivide_width = 2
+subdivide_depth = 2
+
+[sub_resource type="Gradient" id="Gradient_pdvee"]
+colors = PackedColorArray(0.486943, 0.170597, 0.105802, 1, 0.914213, 0.4782, 0.308032, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fo70c"]
+noise_type = 3
+frequency = 0.0066
+fractal_octaves = 6
+fractal_lacunarity = 2.77
+fractal_gain = 1.07
+fractal_weighted_strength = 0.16
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_6vqqm"]
+width = 128
+height = 128
+depth = 128
+seamless = true
+color_ramp = SubResource("Gradient_pdvee")
+noise = SubResource("FastNoiseLite_fo70c")
+
+[sub_resource type="Gradient" id="Gradient_w6s2l"]
+offsets = PackedFloat32Array(0.510638, 0.969819)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ujcxx"]
+gradient = SubResource("Gradient_w6s2l")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t68pw"]
+render_priority = 127
+shader = ExtResource("4_bggpt")
+shader_parameter/DustTexture = SubResource("NoiseTexture3D_6vqqm")
+shader_parameter/heightEffect = SubResource("GradientTexture1D_ujcxx")
+shader_parameter/TextureScale = 0.02
+shader_parameter/SandBegin = 2.0
+shader_parameter/SandEnd = 15.0
+shader_parameter/Sand2DBlend = 15.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o0x8m"]
+render_priority = -127
+shader = ExtResource("9_trbrl")
+shader_parameter/EdgeColor = Color(0.964762, 0.689274, 0.566242, 1)
+shader_parameter/FadeOutDistance = 100.0
+shader_parameter/DepthBreakDistance = 0.359
+shader_parameter/DarkestCutoff = 0.299
+shader_parameter/Sensitivity = 0.21
+shader_parameter/Softness = 0.353
+shader_parameter/BlendRange = 2.156
+shader_parameter/StepCount = 3.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rpd0j"]
+render_priority = 0
+shader = ExtResource("9_vjlki")
+shader_parameter/testPoint = Vector3(0, 6.5225, 0)
+shader_parameter/testPointRadius = 3.4255
+
 [node name="Node3D" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+shadow_blur = 0.944
 
 [node name="Flame2" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 5.38962, 2.68152, 0.0651767)
@@ -103,12 +269,37 @@ velocityMultiplier = 50.0
 RandomNoisePower = 0.02
 
 [node name="BaseMesh3" type="MeshInstance3D" parent="."]
-transform = Transform3D(4.10496, 0, 0, 0, 4.10496, 0, 0, 0, 4.10496, 0.905732, 1.25865, -4.33468)
+transform = Transform3D(4.10496, 0, 0, 0, 4.10496, 0, 0, 0, 4.10496, 0.298549, 1.32218, 3.46846)
 mesh = SubResource("SphereMesh_mrtcr")
-surface_material_override/0 = SubResource("StandardMaterial3D_qo6be")
+surface_material_override/0 = SubResource("StandardMaterial3D_i1hlq")
+
+[node name="BaseMesh4" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.21255, 0, 0, 0, 2.21255, 0, 0, 0, 2.21255, 4.10145, -0.112308, 3.46846)
+mesh = SubResource("SphereMesh_mrtcr")
+surface_material_override/0 = SubResource("StandardMaterial3D_i1hlq")
+
+[node name="BaseMesh5" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.21255, 0, 0, 0, 2.21255, 0, 0, 0, 2.21255, 4.68531, -0.112308, 1.87087)
+mesh = SubResource("SphereMesh_mrtcr")
+surface_material_override/0 = SubResource("StandardMaterial3D_i1hlq")
+
+[node name="BaseMesh6" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.21255, 0, 0, 0, 2.21255, 0, 0, 0, 2.21255, 2.96745, -0.112308, 2.20762)
+mesh = SubResource("SphereMesh_mrtcr")
+surface_material_override/0 = SubResource("StandardMaterial3D_i1hlq")
+
+[node name="BaseMesh7" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.21255, 0, 0, 0, 2.21255, 0, 0, 0, 2.21255, 5.01714, -0.112308, 3.179)
+mesh = SubResource("SphereMesh_mrtcr")
+surface_material_override/0 = SubResource("StandardMaterial3D_i1hlq")
+
+[node name="BaseMesh8" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.21255, 0, 0, 0, 2.21255, 0, 0, 0, 2.21255, 3.66755, -0.112308, 4.50006)
+mesh = SubResource("SphereMesh_mrtcr")
+surface_material_override/0 = SubResource("StandardMaterial3D_i1hlq")
 
 [node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.584915, 0.157996, 0.595401)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.310496, -0.194456, -2.00207)
 
 [node name="BaseMesh" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.00735, 0)
@@ -118,9 +309,9 @@ skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_qo6be")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Node3D"]
-transform = Transform3D(-1.03316e-07, -1, 0, 1, -1.03316e-07, 0, 0, 0, 1, -0.054987, 2.67989, -0.0612485)
+transform = Transform3D(-7.45058e-07, -1, 0, 1, -7.45058e-07, 0, 0, 0, 1, 0.00773832, 2.68548, 0.00562823)
 light_color = Color(0.6, 0.45098, 0.317647, 1)
-light_energy = 1.08784
+light_energy = 1.77547
 light_size = 0.268
 shadow_enabled = true
 omni_range = 10.4749
@@ -128,7 +319,7 @@ omni_range = 10.4749
 [node name="Flame" type="MeshInstance3D" parent="Node3D" node_paths=PackedStringArray("light")]
 transform = Transform3D(-1.03316e-07, -1, 0, 1, -1.03316e-07, 0, 0, 0, 1, 0, 2.08556, 0)
 cast_shadow = 0
-instance_shader_parameters/OffsetDirection = Vector3(-0.639902, 2.83788, 0.534152)
+instance_shader_parameters/OffsetDirection = Vector3(-0.302758, 2.49103, -1.99644)
 mesh = SubResource("SphereMesh_4gxri")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("ShaderMaterial_xfll8")
@@ -151,9 +342,66 @@ skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_qo6be")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.318268, 0, -0.678802)
+transform = Transform3D(3.23937, 0.171363, 0, -0.563443, 0.985208, 0, 0, 0, 3.88352, 4.9822, -0.897761, -0.678802)
+material_override = SubResource("StandardMaterial3D_1s4lw")
 size = Vector3(16.4706, 1, 9.61322)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.318268, 4.21781, -0.678802)
+transform = Transform3D(1, 0, 0, 0, 0.931145, -0.364649, 0, 0.364649, 0.931145, 0.165823, 7.24953, -6.51282)
 size = Vector3(16.4706, 1, 9.61322)
+
+[node name="Root Scene" parent="." instance=ExtResource("5_npi3b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.21343, 0, 0.689693)
+
+[node name="bark02_0" parent="Root Scene/RootNode" index="0"]
+surface_material_override/0 = ExtResource("6_bqujc")
+
+[node name="leaf maple_1" parent="Root Scene/RootNode/bark02_0" index="0"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+surface_material_override/0 = ExtResource("6_bqujc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(21.76, 0, 0, 0, -9.51161e-07, 21.76, 0, -21.76, -9.51161e-07, 9.53674e-07, -4.20578, 14.846)
+visible = false
+mesh = SubResource("QuadMesh_obvji")
+surface_material_override/0 = SubResource("ShaderMaterial_jfke4")
+
+[node name="Water" type="MeshInstance3D" parent="."]
+transform = Transform3D(9.06974, -7.41828e-05, 7.52455e-05, 7.41828e-05, 9.06974, -6.98002e-05, -7.52455e-05, 6.98002e-05, 9.06974, 0, -0.0526502, 1.27045)
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("PlaneMesh_5isye")
+surface_material_override/0 = SubResource("ShaderMaterial_afrat")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="."]
+transform = Transform3D(6.04802, 0, 0, 0, 6.04802, 0, 0, 0, 6.04802, 2.43525, -1.44708, -6.96568)
+
+[node name="DustEffect" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.68175, 0.132769)
+visible = false
+cast_shadow = 0
+extra_cull_margin = 16384.0
+lod_bias = 0.001
+instance_shader_parameters/Density = 1.0
+instance_shader_parameters/PanningDirection = Vector3(1, 0.2, 0.5)
+instance_shader_parameters/Speed = 0.1
+mesh = SubResource("QuadMesh_l3qqo")
+surface_material_override/0 = SubResource("ShaderMaterial_t68pw")
+
+[node name="EdgeWarmerEffect" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.68175, 0.132769)
+cast_shadow = 0
+extra_cull_margin = 16384.0
+lod_bias = 0.001
+mesh = SubResource("QuadMesh_l3qqo")
+surface_material_override/0 = SubResource("ShaderMaterial_o0x8m")
+
+[node name="RayMarchedShadowsTest" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.68175, 0.132769)
+cast_shadow = 0
+extra_cull_margin = 16384.0
+lod_bias = 0.001
+mesh = SubResource("QuadMesh_l3qqo")
+surface_material_override/0 = SubResource("ShaderMaterial_rpd0j")
+
+[editable path="Root Scene"]

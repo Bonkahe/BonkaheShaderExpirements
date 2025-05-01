@@ -1,0 +1,51 @@
+[gd_resource type="CompositorEffect" script_class="SunshineClouds" load_steps=7 format=3 uid="uid://cwso0uu2smtap"]
+
+[ext_resource type="RDShaderFile" uid="uid://dx1y5cye1m1hu" path="res://CompositorEffects/SunshineCloudsCompute.glsl" id="1_voubm"]
+[ext_resource type="Texture2D" uid="uid://g02m2ewpwusq" path="res://CompositorEffects/NoiseTextures/HeightGradient.tres" id="2_u65m8"]
+[ext_resource type="NoiseTexture3D" uid="uid://6ed3lvlpbqmg" path="res://CompositorEffects/NoiseTextures/LargeScaleNoise.tres" id="3_wiq2w"]
+[ext_resource type="NoiseTexture3D" uid="uid://dxyewgt7o40m0" path="res://CompositorEffects/NoiseTextures/MediumScaleNoise.tres" id="4_ivfer"]
+[ext_resource type="NoiseTexture3D" uid="uid://bnck2kxeg5bkg" path="res://CompositorEffects/NoiseTextures/SmallScaleNoise.tres" id="5_y5jkr"]
+[ext_resource type="Script" uid="uid://d2lqbqhhnysnl" path="res://CompositorEffects/SunshineClouds.cs" id="6_xhin1"]
+
+[resource]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 3
+access_resolved_color = false
+access_resolved_depth = true
+needs_motion_vectors = true
+needs_normal_roughness = false
+script = ExtResource("6_xhin1")
+HeightGradient = ExtResource("2_u65m8")
+LargeScaleNoise = ExtResource("3_wiq2w")
+MediumScaleNoise = ExtResource("4_ivfer")
+SmallScaleNoise = ExtResource("5_y5jkr")
+ComputeShader = ExtResource("1_voubm")
+MaxStepCount = 300
+LightingStepCount = 4
+AtmosphericDensity = 0.36
+CloudsDensity = 1.2418
+CloudsSharpnessPower = 1.0
+CloudsLightingSharpnessPower = 0.05
+LightingDensity = 1.0
+CloudsDetailPower = 0.6667
+CloudsCoverage = 0.4955
+LargeNoiseScale = 75994.8
+MediumNoiseScale = 14989.8
+SmallNoiseScale = 1987.84
+MinStepDistance = 100.0
+MaxStepDistance = 300.0
+LightingStepDistance = 500.0
+StepDistanceBias = 0.01
+CloudFloor = 1500.0
+CloudCeiling = 9000.0
+LargeScaleCloudsPosition = Vector3(9317.58, 1737.45, 0)
+MediumScaleCloudsPosition = Vector3(6720.82, 6128.07, 0)
+DetailCloudsPosition = Vector3(-53.6912, 769.31, 0)
+PrimaryDirectionalLightDirection = Vector3(0.5, 0.5, -0.5)
+PrimaryDirectionalLightColor = Color(0.5518, 0.77163, 0.89, 0.0588235)
+AmbientLightColor = Color(0.0237, 0.029265, 0.03, 1)
+DistanceFogColor = Color(1, 1, 1, 1)
+GroundColor = Color(0.00641735, 0.00546294, 0.00498879, 1)
+metadata/_custom_type_script = "uid://d2lqbqhhnysnl"

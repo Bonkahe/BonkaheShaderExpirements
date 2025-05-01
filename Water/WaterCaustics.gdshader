@@ -22,7 +22,7 @@ varying vec3 fragment_worldpos;
 
 void vertex() {
 	//float currentYPos = worldHeight - NODE_POSITION_WORLD.y;
-	
+
 	//vec2 model_position_frac = fract(model_position * subdiv_factor) * subdiv_size;
 	//vec2 model_vertex = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xz;
 	//vertexPosA = model_vertex + (vec2(0.5, 1.0) * TIME * waveTime);
@@ -38,24 +38,24 @@ void fragment() {
 void light() {
 	if (LIGHT_IS_DIRECTIONAL){
 		float cast_shadow = ATTENUATION;
-		
+
 		vec3 origin = fragment_worldpos;
-		
+
 		vec2 vertexPosA = origin.xz + (vec2(0.5, 1.0) * TIME * waveTime);
 		vec2 vertexPosB = origin.xz + (vec2(-0.2, 0.5) * TIME * waveTime);
-		
+
 		float heightvalue = GetHeight(vertexPosA, vertexPosB) + 0.1;
-		
+
 		if (origin.y > heightvalue){
 			DIFFUSE_LIGHT += clamp(dot(NORMAL, LIGHT), 0.0, 1.0) * ATTENUATION * 0.5 * LIGHT_COLOR;
 		}
 		else{
 			float angleUpward = clamp(2.0 - ((dot(LIGHT, vec3(0.0, 1.0, 0.0)) + 1.0)) * 180.0, 0.0, 180.0);
-			
+
 			//
 			if (origin.y < worldHeight){
 				float lengthToTravel = (worldHeight + 1.0) - origin.y / sin(90.0 - angleUpward);
-				
+
 				//origin += SunshineClouds_SunDirection * dither;
 				origin += LIGHT * lengthToTravel;
 			}
@@ -64,7 +64,7 @@ void light() {
 				origin += LIGHT * 1.0;
 			}
 			////origin.y = max(origin.y, SunshineClouds_CloudsFloor + 200.0);
-			
+
 			vertexPosA = origin.xz + (vec2(0.5, 1.0) * TIME * waveTime);
 			vertexPosB = origin.xz + (vec2(-0.2, 0.5) * TIME * waveTime);
 			vec4 generatedNormals = GenerateNormal(vertexPosA, vertexPosB);

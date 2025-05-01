@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://sf5i1o6fklp4"
+path="res://.godot/imported/custom_compositor_effect.glsl-44072d1300cd9fab9bb79b251e992075.res"
+
+[deps]
+
+source_file="res://CompositorEffects/test/custom_compositor_effect.glsl"
+dest_files=["res://.godot/imported/custom_compositor_effect.glsl-44072d1300cd9fab9bb79b251e992075.res"]
+
+[params]
+

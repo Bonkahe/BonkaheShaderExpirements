@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://cw4drult6ifeg"]
+[gd_scene load_steps=15 format=3 uid="uid://cw4drult6ifeg"]
 
 [ext_resource type="Shader" path="res://Water/WaterShader.gdshader" id="1_wga0q"]
 [ext_resource type="Shader" path="res://Water/WaterCaustics.gdshader" id="2_8v6qo"]
+[ext_resource type="Shader" path="res://PostProcessingTests.gdshader" id="3_pvjxf"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_i7ggj"]
 size = Vector2(2048, 2048)
@@ -116,6 +117,9 @@ shader_parameter/fadeOffBottomBeginning = 10.0
 shader_parameter/fadeOffBottomEnd = 200.0
 shader_parameter/waveNoise = SubResource("NoiseTexture2D_thfjn")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hgta8"]
+shader = ExtResource("3_pvjxf")
+
 [node name="Node3D" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -147,7 +151,7 @@ radius = 536.244
 material = SubResource("ShaderMaterial_w3ipv")
 
 [node name="CSGSphere3D5" type="CSGSphere3D" parent="."]
-transform = Transform3D(0.156959, 0, 0, 0, 0.0718055, 0, 0, 0, 0.190254, -88.9511, 115.346, 103.97)
+transform = Transform3D(0.156959, 0, 0, 0, 0.0718055, 0, 0, 0, 0.190254, 16.874, 89.3893, 103.97)
 radius = 536.244
 
 [node name="CSGSphere3D6" type="CSGSphere3D" parent="."]
@@ -159,3 +163,16 @@ material = SubResource("ShaderMaterial_w3ipv")
 transform = Transform3D(0.379114, 0, 0, 0, 0.379114, 0, 0, 0, 0.379114, -215.513, -383.022, -46.2406)
 radius = 536.244
 material = SubResource("ShaderMaterial_74r8s")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_hgta8")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.960912, 0.10938, -0.254332, -0.0159105, 0.938945, 0.343698, 0.276397, -0.326217, 0.903984, -260.497, 261.153, 539.794)
